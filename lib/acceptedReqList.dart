@@ -1,22 +1,15 @@
 import 'dart:ffi';
 import 'dart:math';
 import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickngo/Styles/textStyles.dart';
 import 'package:pickngo/acceptRequest.dart';
 import 'package:pickngo/dashboard.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:pickngo/login.dart';
-import 'package:pickngo/chooseLocation.dart';
-import 'package:pickngo/placeRequest.dart';
-import 'package:pickngo/search.dart';
-import 'package:timeline_tile/timeline_tile.dart';
+
 
 class AcceptedRequests extends StatefulWidget {
   const AcceptedRequests({Key key}) : super(key: key);
@@ -388,7 +381,7 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
           polylineCoordinates[i + 1].latitude,
           polylineCoordinates[i + 1].longitude);
     }
-    print(totalDistance);
+    print("Total Distance is"+totalDistance.toString());
 
     return totalDistance;
   }

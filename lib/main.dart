@@ -5,8 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:pickngo/Styles/textStyles.dart';
 import 'package:pickngo/animation/FadeAnimation.dart';
 import 'package:pickngo/login.dart';
-import 'package:pickngo/signup.dart';
-
+import 'package:pickngo/receiverPortal.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +30,7 @@ class PickNGo extends StatelessWidget {
         }),
       ),
 
-      home: HomePage(),
+      home: ReceiverPortal(),
     );
   }
 }

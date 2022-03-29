@@ -8,11 +8,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickngo/Styles/textStyles.dart';
 import 'package:pickngo/dashboard.dart';
-import 'package:pickngo/login.dart';
-import 'package:pickngo/chooseLocation.dart';
 import 'package:pickngo/placeRequest.dart';
-import 'package:pickngo/search.dart';
-import 'package:timeline_tile/timeline_tile.dart';
+
 
 class RequestsList extends StatefulWidget {
   const RequestsList({Key key}) : super(key: key);
@@ -67,7 +64,7 @@ class _RequestsListState extends State<RequestsList> {
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
-                  .collection('order_requests').where('request_status',isEqualTo: 'Accepted')
+                  .collection('order_requests').where('request_status',isEqualTo: 'Pending')
                   .snapshots(),
               builder: (_, snapshot) {
                 if (snapshot.hasError) return Text('Error = ${snapshot.error}');
@@ -79,6 +76,8 @@ class _RequestsListState extends State<RequestsList> {
                     itemCount: docs.length,
                     itemBuilder: (_, i) {
                       final dataa = docs[i].data();
+                      var latitude = dataa["customer_live_latitude"];
+                      var longitude = dataa["customer_live_longitude"];
 
                       print(snapshot.data.docs.elementAt(i).id);
                       return Container(
@@ -203,10 +202,8 @@ class _RequestsListState extends State<RequestsList> {
                                           ),
                                           FutureBuilder(
                                             future: getDistanceBetween(
-                                                double.parse(dataa[
-                                                    'customer_live_latitude']),
-                                                double.parse(dataa[
-                                                    'customer_live_longitude'])),
+                                                double.parse(latitude),
+                                                double.parse(longitude)),
                                             builder: (context, snapshot) {
                                               if (snapshot.hasData) {
                                                 return Text(
@@ -279,11 +276,12 @@ class _RequestsListState extends State<RequestsList> {
 
     Position _currentUserPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    print(_currentUserPosition);
+
 
     LatLng startLocation =
         LatLng(_currentUserPosition.latitude, _currentUserPosition.longitude);
     LatLng endLocation = LatLng(lat, lon);
+
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPiKey,
@@ -298,7 +296,7 @@ class _RequestsListState extends State<RequestsList> {
     } else {
       print(result.errorMessage);
     }
-    double totalDistance = 0;
+    double totalDistance=0.00;
     for (var i = 0; i < polylineCoordinates.length - 1; i++) {
       totalDistance += calculateDistance(
           polylineCoordinates[i].latitude,
@@ -307,6 +305,8 @@ class _RequestsListState extends State<RequestsList> {
           polylineCoordinates[i + 1].longitude);
     }
     print(totalDistance);
+
+    print("Current Position is"+totalDistance.toString());
 
     return totalDistance;
   }
@@ -318,6 +318,7 @@ class _RequestsListState extends State<RequestsList> {
         cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
     return 12742 * asin(sqrt(a));
   }
+
 
   Widget cusData(String id, String fname, txtstyle) {
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(

@@ -6,13 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:pickngo/Presenter/mainPresenter.dart';
 import 'package:pickngo/Styles/textStyles.dart';
 import 'package:pickngo/acceptedReqList.dart';
-import 'package:pickngo/animation/FadeAnimation.dart';
-import 'package:pickngo/animation/Form.dart';
-import 'package:pickngo/login.dart';
-import 'package:pickngo/chooseLocation.dart';
-import 'package:pickngo/requestsList.dart';
-import 'package:pickngo/search.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 class PlaceOrder extends StatefulWidget {
   final String customerid;
@@ -237,6 +230,11 @@ class _PlaceOrderState extends State<PlaceOrder> {
                             },
                           ),
                         );
+
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(widget.reqid+" Order Accepted"),
+                          backgroundColor: Color(0XFFff7b00),
+                        ));
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
@@ -262,7 +260,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Confirm Pickup",
+                                "Accept Pickup",
                                 style: titleText.copyWith(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w600,

@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pickngo/Styles/textStyles.dart';
 import 'package:pickngo/acceptedReqList.dart';
 import 'package:pickngo/login.dart';
-import 'package:pickngo/chooseLocation.dart';
+import 'package:pickngo/receiverPortal.dart';
 import 'package:pickngo/requestsList.dart';
-import 'package:pickngo/search.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key key}) : super(key: key);
@@ -16,6 +15,28 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+  @override
+  void initState() {
+    super.initState();
+    // getEmployeeData();
+  }
+
+  String empServiceArea;
+  //
+  // void getEmployeeData() async {
+  //   var collection = FirebaseFirestore.instance.collection('emp_details');
+  //   var docSnapshot = await collection.doc(FirebaseAuth.instance.currentUser.uid).get();
+  //   if (docSnapshot.exists) {
+  //     Map<String, dynamic> data = docSnapshot.data();
+  //     setState(() {
+  //       empServiceArea = data['serviceArea'];
+  //    });
+  //
+  //     print(data['serviceArea']);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,6 +59,18 @@ class _DashboardState extends State<Dashboard> {
             color: Colors.black,
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.directions),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReceiverPortal(),
+                  ),
+                );
+              }),
+        ],
       ),
       body: Container(
         margin: EdgeInsets.only(right: 30.0, left: 30.0),
@@ -115,7 +148,6 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     );
                   },
-
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40.0)),
                   padding: const EdgeInsets.all(0.0),
@@ -131,7 +163,8 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: BorderRadius.all(Radius.circular(40.0)),
                     ),
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 30.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 30.0),
                       constraints:
                           const BoxConstraints(minWidth: 88.0, minHeight: 36.0),
                       alignment: Alignment.center,
@@ -139,7 +172,8 @@ class _DashboardState extends State<Dashboard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image(
-                            image: AssetImage("assets/icons/reqplacepickup.png"),
+                            image:
+                                AssetImage("assets/icons/reqplacepickup.png"),
                             width: 60.0,
                             color: Colors.white,
                           ),
@@ -148,6 +182,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                           Text(
                             "PICKUP\nREQUESTS",
+                            textAlign: TextAlign.center,
                             style: titleText.copyWith(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
@@ -159,11 +194,9 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 20.0,
                 ),
-
                 FlatButton(
                   splashColor: Color(0XFFF30021),
                   highlightColor: Colors.transparent,
@@ -192,9 +225,10 @@ class _DashboardState extends State<Dashboard> {
                       borderRadius: BorderRadius.all(Radius.circular(40.0)),
                     ),
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 25.0,horizontal: 30.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 25.0, horizontal: 30.0),
                       constraints:
-                      const BoxConstraints(minWidth: 88.0, minHeight: 36.0),
+                          const BoxConstraints(minWidth: 88.0, minHeight: 36.0),
                       alignment: Alignment.center,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -222,11 +256,9 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ],
             ),
-
             SizedBox(
               height: 40.0,
             ),
-
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -237,14 +269,14 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ],
             ),
-
             Expanded(
               child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance
                     .collection('order_requests')
                     .snapshots(),
                 builder: (_, snapshot) {
-                  if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+                  if (snapshot.hasError)
+                    return Text('Error = ${snapshot.error}');
 
                   if (snapshot.hasData) {
                     final docs = snapshot.data.docs;
@@ -261,9 +293,7 @@ class _DashboardState extends State<Dashboard> {
                           child: FlatButton(
                             splashColor: Color(0XFFFFF2E5),
                             highlightColor: Colors.transparent,
-                            onPressed: () {
-
-                            },
+                            onPressed: () {},
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
                             padding: const EdgeInsets.all(0.0),
@@ -271,7 +301,7 @@ class _DashboardState extends State<Dashboard> {
                               decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
+                                    BorderRadius.all(Radius.circular(20.0)),
                               ),
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -280,7 +310,8 @@ class _DashboardState extends State<Dashboard> {
                                     minWidth: 88.0, minHeight: 36.0),
                                 alignment: Alignment.centerLeft,
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
@@ -299,7 +330,6 @@ class _DashboardState extends State<Dashboard> {
                                         ),
                                       ],
                                     ),
-
                                     SizedBox(
                                       height: 10.0,
                                     ),
@@ -310,11 +340,11 @@ class _DashboardState extends State<Dashboard> {
                                           width: 70.0,
                                           decoration: BoxDecoration(
                                               color: dataa['receiver_type'] ==
-                                                  "Sensitive"
+                                                      "Sensitive"
                                                   ? Colors.red
                                                   : Colors.amber,
                                               borderRadius:
-                                              BorderRadius.circular(30.0)),
+                                                  BorderRadius.circular(30.0)),
                                           alignment: Alignment.center,
                                           child: Text(
                                             "${dataa["receiver_type"]}",
@@ -353,8 +383,6 @@ class _DashboardState extends State<Dashboard> {
                 },
               ),
             ),
-
-
           ],
         ),
       ),

@@ -8,13 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:pickngo/Presenter/mainPresenter.dart';
 import 'package:pickngo/Styles/textStyles.dart';
 import 'package:pickngo/acceptedReqList.dart';
-import 'package:pickngo/animation/FadeAnimation.dart';
-import 'package:pickngo/animation/Form.dart';
-import 'package:pickngo/login.dart';
-import 'package:pickngo/chooseLocation.dart';
-import 'package:pickngo/requestsList.dart';
-import 'package:pickngo/search.dart';
-import 'package:timeline_tile/timeline_tile.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class AcceptRequest extends StatefulWidget {
@@ -166,6 +160,11 @@ class _AcceptRequestState extends State<AcceptRequest> {
                     _presenter.updateStatus(widget.reqid, "Collected");
                     _presenter.updateTracking(widget.reqid,true, true,false, false, false, false);
                     _presenter.updatePickup(widget.reqid, "Collected", pickdate, picktime);
+
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(widget.reqid+" Confirmed Pickup Successfully"),
+                      backgroundColor: Color(0XFFff7b00),
+                    ));
 
                     Navigator.push(
                       context,

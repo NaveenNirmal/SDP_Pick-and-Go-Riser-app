@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pickngo/Models/CompleteDelivery.dart';
 import 'package:pickngo/Models/Users.dart';
 import 'package:pickngo/Models/VehicleTracking.dart';
 import 'package:pickngo/Models/order_pickup.dart';
@@ -17,6 +18,11 @@ class Database {
   Future<void>addTracking(VehicleTracking vehicleTracking, String trackingid) async{
     var tracking=vehicleTracking.toMap();
     await _firestore.collection('tracking').doc(trackingid).set(tracking);
+  }
+
+  Future<void>addCompleteDelivery(CompleteDelivery completeDelivery, String orderID) async{
+    var completedDelivery=completeDelivery.toMap();
+    await _firestore.collection('completed_orders').doc(orderID).set(completedDelivery);
   }
 
   Future<void>updateTracking(VehicleTracking vehicleTracking,String reqid) async{

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pickngo/Models/CompleteDelivery.dart';
 import 'package:pickngo/Models/Users.dart';
 import 'package:pickngo/Models/VehicleTracking.dart';
 import 'package:pickngo/Models/database.dart';
@@ -96,6 +97,16 @@ class Presenter {
         Delivered: Delivered
     );
     await _database.updateTracking(tracking,reqid);
+  }
+
+  Future<void> addCompleteDelivery(String reqid,String imgURL) async {
+
+    CompleteDelivery completeDelivery=CompleteDelivery(
+      imgURL: imgURL
+    );
+
+
+    await _database.addCompleteDelivery(completeDelivery,reqid);
   }
 
 

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pickngo/Presenter/mainPresenter.dart';
 import 'package:pickngo/Styles/textStyles.dart';
 import 'package:pickngo/animation/FadeAnimation.dart';
-import 'package:pickngo/dashboard.dart';
-import 'package:pickngo/signup.dart';
-import 'package:pickngo/trackingpage.dart';
 
 class LoginPage extends StatelessWidget {
   @override
